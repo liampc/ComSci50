@@ -13,6 +13,11 @@
 
     <h4>$ {{listing.price}}</h4>
 
+    <form action="{% url 'listing' listing.id %" method="Post">
+        <input type="integer" name="bid_price">
+        <input type="submit" value="Place Bid">
+    </form>
+
     <h5>Details:</h5>
     <uL>
         <li>Listed by: {{listing.lister}}</li>
