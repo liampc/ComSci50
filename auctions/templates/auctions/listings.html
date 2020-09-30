@@ -1,0 +1,23 @@
+{% extends "auctions/layout.html" %}
+
+
+{% block body %}
+
+    <h1>Auctions</h1>
+
+    <h3>Listing: {{listing.product}}</h3>
+
+    {% if listing.description %}
+        <p>{{listing.description}}
+    {% endif %}
+
+    <h4>$ {{listing.price}}</h4>
+
+    <h5>Details:</h5>
+    <uL>
+        <li>Listed by: {{listing.lister}}</li>
+        <li>Category:</li>
+    </uL>
+
+
+{% endblock %}
