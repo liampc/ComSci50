@@ -13,14 +13,11 @@
 
     <h4>$ {{listing.price}}</h4>
 
-    <!-- {% if bids %}
-        {% for bid in bids %}
-            <li>{{bid}}</li>
-        {% endfor %}
-    {% endif %} -->
-
     <span>{{bids}} bid(s) so far.</span>
 
+    {% if newbid %}
+        <span>Your bid is {{newbid}}</span>
+    {% endif %}
 
     <form action="{% url 'listings' listing.id %}" method="Post">
         {% csrf_token %}
