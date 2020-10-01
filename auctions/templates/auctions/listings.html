@@ -13,7 +13,8 @@
 
     <h4>$ {{listing.price}}</h4>
 
-    <form action="{% url 'listing' listing.id %" method="Post">
+    <form action="{% url 'listings' listing.id %}" method="Post">
+        {% csrf_token %}
         <input type="integer" name="bid_price">
         <input type="submit" value="Place Bid">
     </form>
