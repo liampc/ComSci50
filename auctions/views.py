@@ -66,15 +66,17 @@ def register(request):
 
 
 def listings(request, product_id):
+    bids = Bid.objects.filter(product=product_id).count()
     if request.method == "POST" and request.user.is_authenticated:
         user = User.objects.get(pk=request.user.id)
         listing = Listing.objects.get(pk=product_id)
         newbid = Bid.objects.create(bid=int(request.POST['bid_price']), bidder=user, product=listing)
         return render(request, "auctions/listings.html", {
             "listing": listing,
-            "bids": Bid.objects.filter(product=product_id)
+            "bids": f"{Bid.objects.filter(product=product_id).count()}"
         })
 
     return render(request, "auctions/listings.html", {
-        "listing": Listing.objects.get(id=product_id)
+        "listing": Listing.objects.get(id=product_id),
+        "bids": f"{bids}"
     })
