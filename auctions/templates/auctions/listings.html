@@ -13,6 +13,13 @@
 
     <h4>$ {{listing.price}}</h4>
 
+    {% if bids %}
+        {% for bid in bids %}
+            <li>{{bid}}</li>
+        {% endfor %}
+    {% endif %}
+
+    
     <form action="{% url 'listings' listing.id %}" method="Post">
         {% csrf_token %}
         <input type="integer" name="bid_price">

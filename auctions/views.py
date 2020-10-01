@@ -4,7 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 
-from .models import User, Listing
+from .models import User, Listing, Bid
 
 
 def index(request):
@@ -66,6 +66,15 @@ def register(request):
 
 
 def listings(request, product_id):
+    if request.method == "POST" and request.user.is_authenticated:
+        user = User.objects.get(pk=request.user.id)
+        listing = Listing.objects.get(pk=product_id)
+        newbid = Bid.objects.create(bid=int(request.POST['bid_price']), bidder=user, product=listing)
+        return render(request, "auctions/listings.html", {
+            "listing": listing,
+            "bids": Bid.objects.filter(product=product_id)
+        })
+
     return render(request, "auctions/listings.html", {
         "listing": Listing.objects.get(id=product_id)
     })
