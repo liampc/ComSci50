@@ -80,5 +80,5 @@ def listings(request, product_id):
     return render(request, "auctions/listings.html", {
         "listing": Listing.objects.get(id=product_id),
         "bids": f"{bids.count()}",
-        "comments": Comment.objects.all()
+        "comments": Comment.objects.filter(id=product_id)
     })
