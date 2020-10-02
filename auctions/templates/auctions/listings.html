@@ -16,7 +16,11 @@
     <span>{{bids}} bid(s) so far.</span>
 
     {% if newbid %}
-        <span>Your bid is {{newbid}}</span>
+            {% if newbid == listing.price %}
+                <span>Your bid is the current bid</span>
+            {% else %}
+                <span>Your bid is ${{newbid | floatformat:2}}</span>
+            {% endif %}
     {% endif %}
 
     <form action="{% url 'listings' listing.id %}" method="Post">
