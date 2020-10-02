@@ -5,4 +5,19 @@
 
     <h1>Add New Listing</h1>
 
+
+    <form>
+        {% csrf_token %}
+        {{form.product.label_tag}}
+        {{form.product}}
+        <br>
+        {{form.price.label_tag}}
+        {{form.price}}
+        <br>
+        {{form.description.label_tag}}
+        {{form.description}}
+        <br>
+        <input type="submit" value="Submit">
+    </form>
+
 {% endblock %}

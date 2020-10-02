@@ -5,6 +5,7 @@ from django.shortcuts import render
 from django.urls import reverse
 
 from .models import User, Listing, Bid, Comment
+from .forms import Add_listing
 
 
 def index(request):
@@ -85,4 +86,6 @@ def listings(request, product_id):
 
 
 def add_listing(request):
-    return render(request, "auctions/add_listing.html")
+    return render(request, "auctions/add_listing.html", {
+        "form": Add_listing()
+    })
