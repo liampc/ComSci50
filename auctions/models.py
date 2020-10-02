@@ -25,3 +25,13 @@ class Bid(models.Model):
 
     def __str__(self):
         return f"{self.bidder} bids for {self.bid} on {self.product}"
+
+
+class Comment(models.Model):
+    comment_text = models.TextField(max_length=200)
+    commenter = models.ForeignKey(User, related_name="comments", on_delete=models.CASCADE)
+    date_created = models.DateTimeField(auto_now_add=True)
+    product = models.ForeignKey(Listing, on_delete=models.CASCADE,)
+
+    def __str__(self):
+        return f"{self.commenter} comments on {self.product}"

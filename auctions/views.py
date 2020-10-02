@@ -4,7 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 
-from .models import User, Listing, Bid
+from .models import User, Listing, Bid, Comment
 
 
 def index(request):
@@ -79,5 +79,6 @@ def listings(request, product_id):
 
     return render(request, "auctions/listings.html", {
         "listing": Listing.objects.get(id=product_id),
-        "bids": f"{bids.count()}"
+        "bids": f"{bids.count()}",
+        "comments": Comment.objects.all()
     })
