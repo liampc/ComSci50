@@ -35,5 +35,12 @@
         <li>Category:</li>
     </uL>
 
-
+    <h5>Comments:</h5>
+    
+    {% if comments %}
+        {% for comment in comments %}
+            <p>{{comment.commenter}} comments</p>
+            <p>{{comment.comment_text}}</p>
+        {% endfor %}
+    {% endif %}
 {% endblock %}
