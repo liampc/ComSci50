@@ -82,3 +82,7 @@ def listings(request, product_id):
         "bids": f"{bids.count()}",
         "comments": Comment.objects.filter(id=product_id)
     })
+
+
+def add_listing(request):
+    return render(request, "auctions/add_listing.html")
