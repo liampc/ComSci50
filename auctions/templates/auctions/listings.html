@@ -7,6 +7,10 @@
 
     <h3>Listing: {{listing.product}}</h3>
 
+    {% if listing.product_image %}
+        <img src="{{listing.product_image.url}}">
+    {% endif %}
+
     {% if listing.description %}
         <p>{{listing.description}}
     {% endif %}

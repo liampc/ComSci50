@@ -87,13 +87,14 @@ def listings(request, product_id):
 
 def add_listing(request):
     if request.method == "POST":
-        form = Add_listing(request.POST)
+        form = Add_listing(request.POST, request.FILES)
         if form.is_valid():
             new = Listing()
             new.product = form.cleaned_data["product"]
             new.price = form.cleaned_data["price"]
             new.description = form.cleaned_data["description"]
             new.lister = request.user.id
+            new.product_image = form.cleaned_data["product_image"]
             new.save()
             return render(request, "auctions/add_listing.html", {
                 "message": "Your Listing has been added!"
