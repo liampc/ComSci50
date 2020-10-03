@@ -1,0 +1,44 @@
+{% extends "auctions/layout.html" %}
+
+
+{% block body %}
+
+
+    {% if message %}
+        <h2>{{message}}</h2>
+
+        <a href="{% url 'add_listing'%}">Add more listing</a>
+        <br>
+        <a href="{% url 'index'%}">See all listings</a>
+
+    {% else %}
+        <h2>Add New Listing</h2>
+
+    {% endif %}
+
+    <form action="{% url 'add_listing' %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{form.product.label_tag}}
+        {{form.product}}
+        <br>
+        {{form.price.label_tag}}
+        {{form.price}}
+        <br>
+        {{form.description.label_tag}}
+        {{form.description}}
+        <br>
+        {{form.category.label_tag}}
+        {{form.category}}
+        <br>
+        {{form.image_url.label_tag}}
+        {{form.image_url}}
+        <br>
+        {{form.product_image.label_tag}}
+        {{form.product_image}}
+        <br>
+        {% if form %}
+            <input type="submit" value="Submit">
+        {% endif %}
+    </form>
+
+{% endblock %}
