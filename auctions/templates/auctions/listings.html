@@ -39,8 +39,13 @@
     <h5>Details:</h5>
     <uL>
         <li>Listed by: {{listing.lister}}</li>
-        <li>Category:</li>
+        {% if listing.category %}
+            <li>Category: {{listing.category}}</li>
+        {% else %}
+            <li>Category: No Category Listed</li>
+        {% endif %}
     </uL>
+
 
     <h5>Comments:</h5>
     

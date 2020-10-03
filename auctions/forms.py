@@ -7,3 +7,4 @@ class Add_listing(forms.Form):
     description = forms.CharField(label="Description",widget=forms.Textarea, required=False)
     product_image = forms.ImageField(label="Product", required=False,)
     image_url = forms.URLField(label="Image URL", required=False)
+    category = forms.CharField(label="Category", max_length=64)
