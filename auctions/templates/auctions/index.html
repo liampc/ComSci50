@@ -9,9 +9,13 @@
     {% for listing in listings %}
     <div>
         <h4><a href="{% url 'listings' listing.id %}">{{listing.product}}</a></h4>
+
         {% if listing.product_image %}
-            <img src="{{listing.product_image.url}}" width="300px" height="200px">
+            <img src="{{listing.product_image.url}}"  width="500px" height="400px">
+        {% elif listing.image_url %}
+            <img src="{{listing.image_url}}" width="500px" height="400px">
         {% endif %}
+
         <h5>Price: ${{listing.price}}</h5>
         <span>Date Created: {{listing.date_created}}</span>
     </div>

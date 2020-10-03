@@ -9,6 +9,9 @@
 
     {% if listing.product_image %}
         <img src="{{listing.product_image.url}}"  width="500px" height="400px">
+
+    {% elif listing.image_url %}
+        <img src="{{listing.image_url}}" width="500px" height="400px">
     {% endif %}
 
     {% if listing.description %}

@@ -95,6 +95,7 @@ def add_listing(request):
             new.description = form.cleaned_data["description"]
             new.lister = request.user.id
             new.product_image = form.cleaned_data["product_image"]
+            new.image_url = form.cleaned_data["image_url"]
             new.save()
             return render(request, "auctions/add_listing.html", {
                 "message": "Your Listing has been added!"
