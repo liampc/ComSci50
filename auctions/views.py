@@ -108,4 +108,6 @@ def add_listing(request):
 
 
 def categories(request):
-    return render(request, "auctions/categories.html")
+    return render(request, "auctions/categories.html", {
+        "categories": Listing.objects.exclude(category = None)
+    })

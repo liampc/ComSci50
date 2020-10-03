@@ -5,4 +5,13 @@
 
     <h2>Categories</h2>
 
+    {% if categories %}
+        <ul>
+            {% for category in categories %}
+                <li><a>{{ category.category}}</a></li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+        
+
 {% endblock %}
