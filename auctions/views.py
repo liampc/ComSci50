@@ -5,6 +5,7 @@ from django.shortcuts import render
 from django.urls import reverse
 
 from .models import User, Listing, Bid, Comment
+from .forms import Add_listing
 
 
 def index(request):
@@ -80,5 +81,28 @@ def listings(request, product_id):
     return render(request, "auctions/listings.html", {
         "listing": Listing.objects.get(id=product_id),
         "bids": f"{bids.count()}",
-        "comments": Comment.objects.filter(id=product_id)
+        "comments": Comment.objects.filter(id=product_id),
+
+    })
+
+
+def add_listing(request):
+    if request.method == "POST":
+        form = Add_listing(request.POST, request.FILES)
+        if form.is_valid():
+            new = Listing()
+            new.product = form.cleaned_data["product"]
+            new.price = form.cleaned_data["price"]
+            new.description = form.cleaned_data["description"]
+            new.lister = request.user.id
+            new.product_image = form.cleaned_data["product_image"]
+            new.image_url = form.cleaned_data["image_url"]
+            new.category = form.cleaned_data["category"]
+            new.save()
+            return render(request, "auctions/add_listing.html", {
+                "message": "Your Listing has been added!"
+            })
+    
+    return render(request, "auctions/add_listing.html", {
+        "form": Add_listing()
     })
