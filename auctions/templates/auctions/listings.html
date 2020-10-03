@@ -50,10 +50,12 @@
     <h5>Comments:</h5>
     
     {% if comments %}
+    <div>
         {% for comment in comments %}
-            <p>{{comment.commenter}} comments</p>
+            <p>{{comment.commenter}} commented:</p>
             <p>{{comment.comment_text}}</p>
         {% endfor %}
+    </div>
     {% endif %}
-
+    
 {% endblock %}
