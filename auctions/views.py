@@ -105,3 +105,7 @@ def add_listing(request):
     return render(request, "auctions/add_listing.html", {
         "form": Add_listing()
     })
+
+
+def categories(request):
+    return render(request, "auctions/categories.html")
