@@ -8,7 +8,7 @@
     <h3>Active Listings</h3> 
     {% for listing in listings %}
     <div>
-        <h4>{{listing.product}}</h4>
+        <h4><a href="{% url 'listings' listing.id %}">{{listing.product}}</a></h4>
         {% if listing.product_image %}
             <img src="{{listing.product_image.url}}" width="300px" height="200px">
         {% endif %}
