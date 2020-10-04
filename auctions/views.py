@@ -108,9 +108,7 @@ def add_listing(request):
 
 
 def categories(request):
-    ls = list(Listing.objects.exclude(category = None))
-    # newls = []
-    # [newls.append(x) for x in ls if x not in newls]
+    ls = Listing.objects.values("category").exclude(category=None).distinct()
     return render(request, "auctions/categories.html", {
         "categories": ls,
     })
