@@ -24,6 +24,9 @@
                 <a class="nav-link" href="{% url 'categories' %}">Categories</a>
             </li>
             {% if user.is_authenticated %}
+                 <li class="nav-item">
+                    <a class="nav-link" href="{% url 'watchlist' %}">Watchlist</a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'add_listing' %}">Create Listing</a>
                 </li>
