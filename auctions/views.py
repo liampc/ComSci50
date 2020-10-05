@@ -125,5 +125,5 @@ def category(request, category):
 def watchlist(request, user):
     person = User.objects.get(username = user)
     return render(request, "auctions/watchlist.html", {
-        "listings": person
+        "listings": person.watchlist.all()
     })
