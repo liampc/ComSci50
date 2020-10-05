@@ -52,7 +52,7 @@
     <uL>
         <li>Listed by: {{listing.lister}}</li>
         {% if listing.category %}
-            <li>Category: {{listing.category}}</li>
+            <li>Category: <a href="{% url 'category' listing.category %}">{{listing.category}}</a></li>
         {% else %}
             <li>Category: No Category Listed</li>
         {% endif %}

@@ -98,7 +98,7 @@ def listings(request, product_id):
         "bids": f"{bids.count()}",
         "comments": comments,
         "message": message,
-        "newbid": newbid
+        "newbid": newbid,
     })
 
 
