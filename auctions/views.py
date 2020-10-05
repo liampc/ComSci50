@@ -6,7 +6,7 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 
 from .models import User, Listing, Bid, Comment, Watchlist
-from .forms import Add_listing
+from .forms import Add_listing, Add_bid
 
 
 def index(request):
@@ -74,6 +74,7 @@ def listings(request, product_id):
     comments = Comment.objects.filter(id=product_id)
     message = None
     newbid = None
+    bid_form = Add_bid()
     
     if request.method == "POST" and request.user.is_authenticated:
         if request.POST['action'] == "Watchlist":
@@ -99,8 +100,8 @@ def listings(request, product_id):
         "comments": comments,
         "message": message,
         "newbid": newbid,
+        "bid_form": bid_form,
     })
-
 
 
 def add_listing(request):
