@@ -67,44 +67,39 @@ def register(request):
         return render(request, "auctions/register.html")
 
 
-
 def listings(request, product_id):
     bids = Bid.objects.filter(product=product_id)
     user = User.objects.get(pk=request.user.id)
     listing = Listing.objects.get(pk=product_id)
     comments = Comment.objects.filter(id=product_id)
+    message = None
+    newbid = None
     
     if request.method == "POST" and request.user.is_authenticated:
         if request.POST['action'] == "Watchlist":
             try:
                 user.watchlist.get(product=listing)
-                return render(request, "auctions/listings.html", {
-                "message": "Already added to watchlist",
-                "listing": listing,
-                "bids": f"{bids.count()}",
-                "comments": comments
-            })
+                message = "Already added to watchlist"
             except:
-                watchls = Watchlist.objects.create(watchlist = True, user=user, product=listing)
-                return render(request, "auctions/listings.html", {
-                    "message": "Added to watchlist",
-                    "listing": listing,
-                    "bids": f"{bids.count()}",
-                    "comments": comments,
-                })
+                watchls = Watchlist.objects.create(
+                    watchlist = True, 
+                    user=user, 
+                    product=listing)
+                message = "Added to watchlist"
         elif request.POST['action'] == "Place Bid":
-            newbid = Bid.objects.create(bid=int(request.POST['bid_price']), bidder=user, product=listing)
-            return render(request, "auctions/listings.html", {
-                "listing": listing,
-                "bids": f"{bids.count()}",
-                "newbid": f"{newbid.bid}"
-            })
+            newbid = Bid.objects.create(
+                bid=int(request.POST['bid_price']), 
+                bidder=user, 
+                product=listing)
+            newbid = f"{newbid.bid}"
+
     return render(request, "auctions/listings.html", {
         "listing": listing,
         "bids": f"{bids.count()}",
-        "comments": comments
+        "comments": comments,
+        "message": message,
+        "newbid": newbid
     })
-
 
 
 
