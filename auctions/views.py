@@ -94,7 +94,7 @@ def add_listing(request):
             new.product = form.cleaned_data["product"]
             new.price = form.cleaned_data["price"]
             new.description = form.cleaned_data["description"]
-            new.lister = request.user.id
+            new.lister = request.user
             new.product_image = form.cleaned_data["product_image"]
             new.image_url = form.cleaned_data["image_url"]
             new.category = form.cleaned_data["category"]
@@ -122,5 +122,8 @@ def category(request, category):
 
 
 @login_required
-def watchlist(request):
-    return render(request, "auctions/watchlist.html")
+def watchlist(request, user):
+    person = User.objects.get(username = user)
+    return render(request, "auctions/watchlist.html", {
+        "listings": person
+    })
