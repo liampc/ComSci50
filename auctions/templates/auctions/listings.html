@@ -20,6 +20,18 @@
 
     <h4>$ {{listing.price}}</h4>
 
+    {% if user.is_authenticated %}
+        <form action="{% url 'listings' listing.id %}" method="Post">
+            {% csrf_token %}
+             <input type="submit" name="action" value="Watchlist">
+        </form>
+        <br>
+    {% endif %}
+
+    {% if message %}
+        <p>{{message}}</p>
+    {% endif %}
+
     <span>{{bids}} bid(s) so far.</span>
 
     {% if newbid %}
@@ -33,7 +45,7 @@
     <form action="{% url 'listings' listing.id %}" method="Post">
         {% csrf_token %}
         <input type="integer" name="bid_price">
-        <input type="submit" value="Place Bid">
+        <input type="submit" name="action" value="Place Bid">
     </form>
 
     <h5>Details:</h5>

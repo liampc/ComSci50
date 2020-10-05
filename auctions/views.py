@@ -5,7 +5,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 
-from .models import User, Listing, Bid, Comment
+from .models import User, Listing, Bid, Comment, Watchlist
 from .forms import Add_listing
 
 
@@ -69,16 +69,24 @@ def register(request):
 
 def listings(request, product_id):
     bids = Bid.objects.filter(product=product_id)
+    user = User.objects.get(pk=request.user.id)
+    listing = Listing.objects.get(pk=product_id)
     if request.method == "POST" and request.user.is_authenticated:
-        user = User.objects.get(pk=request.user.id)
-        listing = Listing.objects.get(pk=product_id)
-        newbid = Bid.objects.create(bid=int(request.POST['bid_price']), bidder=user, product=listing)
-        return render(request, "auctions/listings.html", {
-            "listing": listing,
-            "bids": f"{bids.count()}",
-            "newbid": f"{newbid.bid}"
-        })
-
+        if request.POST['action'] == "Watchlist":
+            watchls = Watchlist.objects.create(watchlist = True, user=user, product=listing)
+            return render(request, "auctions/listings.html", {
+                "message": "Added to watchlist",
+                "listing": Listing.objects.get(id=product_id),
+                "bids": f"{bids.count()}",
+                "comments": Comment.objects.filter(id=product_id)
+            })
+        elif request.POST['action'] == "Place Bid":
+            newbid = Bid.objects.create(bid=int(request.POST['bid_price']), bidder=user, product=listing)
+            return render(request, "auctions/listings.html", {
+                "listing": listing,
+                "bids": f"{bids.count()}",
+                "newbid": f"{newbid.bid}"
+            })
     return render(request, "auctions/listings.html", {
         "listing": Listing.objects.get(id=product_id),
         "bids": f"{bids.count()}",
