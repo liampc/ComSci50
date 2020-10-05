@@ -67,19 +67,31 @@ def register(request):
         return render(request, "auctions/register.html")
 
 
+
 def listings(request, product_id):
     bids = Bid.objects.filter(product=product_id)
     user = User.objects.get(pk=request.user.id)
     listing = Listing.objects.get(pk=product_id)
+    comments = Comment.objects.filter(id=product_id)
+    
     if request.method == "POST" and request.user.is_authenticated:
         if request.POST['action'] == "Watchlist":
-            watchls = Watchlist.objects.create(watchlist = True, user=user, product=listing)
-            return render(request, "auctions/listings.html", {
-                "message": "Added to watchlist",
-                "listing": Listing.objects.get(id=product_id),
+            try:
+                user.watchlist.get(product=listing)
+                return render(request, "auctions/listings.html", {
+                "message": "Already added to watchlist",
+                "listing": listing,
                 "bids": f"{bids.count()}",
-                "comments": Comment.objects.filter(id=product_id)
+                "comments": comments
             })
+            except:
+                watchls = Watchlist.objects.create(watchlist = True, user=user, product=listing)
+                return render(request, "auctions/listings.html", {
+                    "message": "Added to watchlist",
+                    "listing": listing,
+                    "bids": f"{bids.count()}",
+                    "comments": comments,
+                })
         elif request.POST['action'] == "Place Bid":
             newbid = Bid.objects.create(bid=int(request.POST['bid_price']), bidder=user, product=listing)
             return render(request, "auctions/listings.html", {
@@ -88,10 +100,12 @@ def listings(request, product_id):
                 "newbid": f"{newbid.bid}"
             })
     return render(request, "auctions/listings.html", {
-        "listing": Listing.objects.get(id=product_id),
+        "listing": listing,
         "bids": f"{bids.count()}",
-        "comments": Comment.objects.filter(id=product_id)
+        "comments": comments
     })
+
+
 
 
 def add_listing(request):
