@@ -20,6 +20,18 @@
 
     <h4>$ {{listing.price}}</h4>
 
+    {% if user.is_authenticated %}
+        <form action="{% url 'listings' listing.id %}" method="Post">
+            {% csrf_token %}
+             <input type="submit" name="action" value="Watchlist">
+        </form>
+        <br>
+    {% endif %}
+
+    {% if message %}
+        <p>{{message}}</p>
+    {% endif %}
+
     <span>{{bids}} bid(s) so far.</span>
 
     {% if newbid %}
@@ -32,15 +44,16 @@
 
     <form action="{% url 'listings' listing.id %}" method="Post">
         {% csrf_token %}
-        <input type="integer" name="bid_price">
-        <input type="submit" value="Place Bid">
+        <!-- <input type="integer" name="bid_price"> -->
+        {{bid_form.bid_price}}
+        <input type="submit" name="action" value="Place Bid">
     </form>
 
     <h5>Details:</h5>
     <uL>
         <li>Listed by: {{listing.lister}}</li>
         {% if listing.category %}
-            <li>Category: {{listing.category}}</li>
+            <li>Category: <a href="{% url 'category' listing.category %}">{{listing.category}}</a></li>
         {% else %}
             <li>Category: No Category Listed</li>
         {% endif %}
@@ -50,10 +63,12 @@
     <h5>Comments:</h5>
     
     {% if comments %}
+    <div>
         {% for comment in comments %}
-            <p>{{comment.commenter}} comments</p>
+            <p>{{comment.commenter}} commented:</p>
             <p>{{comment.comment_text}}</p>
         {% endfor %}
+    </div>
     {% endif %}
-
+    
 {% endblock %}

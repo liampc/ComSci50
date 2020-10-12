@@ -3,9 +3,6 @@
 {% block body %}
     <h2>Active Listings</h2>
 
-    TODO
-
-    <h3>Active Listings</h3> 
     {% for listing in listings %}
     <div>
         <h4><a href="{% url 'listings' listing.id %}">{{listing.product}}</a></h4>
